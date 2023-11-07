@@ -1,0 +1,34 @@
+#!/bin/bash
+
+#user defined wallpaper
+
+Filepath=$1
+background=~/Pictures/.background/bgwp
+
+
+if [[ $Filepath == "" ]]; then
+
+	echo "its blank idiot"
+	read -p "Type filepath here (cancel? [n]): " Filepath
+
+	if [[ $Filepath == "n" ]] || [[ $Filepath == "" ]]; then
+
+		echo "cancelled"
+		exit
+	fi
+
+fi
+
+cp $Filepath $background
+
+2ff <$background> $background.ff
+
+background=$background.ff
+
+echo $background
+
+feh --bg-max $background
+
+pidof st | xargs kill -s USR1
+
+
