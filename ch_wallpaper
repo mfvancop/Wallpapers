@@ -8,27 +8,30 @@ background=~/Pictures/.background/bgwp
 
 if [[ $Filepath == "" ]]; then
 
-	echo "its blank idiot"
-	read -p "Type filepath here (cancel? [n]): " Filepath
+        echo "its blank idiot"
+        read -p "Type filepath here (cancel? [n]): " Filepath
 
-	if [[ $Filepath == "n" ]] || [[ $Filepath == "" ]]; then
+        if [[ $Filepath == "n" ]] || [[ $Filepath == "" ]]; then
 
-		echo "cancelled"
-		exit
-	fi
+                echo "cancelled"
+                exit
+        fi
 
 fi
 
 cp $Filepath $background
 
-2ff <$background> $background.ff
+2ff <$background | ff-border e 50 | ff-bright rgba 0 0.5 1 | ff-blur 50 15 > $background.ff
+
+cd ~/.local/src/suckless/st/
+        sudo rm config.h
+        sudo make clean install
+cd
+
+feh --bg-max $background
 
 background=$background.ff
 
 echo $background
 
-feh --bg-max $background
-
 pidof st | xargs kill -s USR1
-
-
